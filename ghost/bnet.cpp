@@ -1694,8 +1694,8 @@ void CBNET :: BotCommand( string Message, string User, bool Whisper, bool ForceR
 
 						for( directory_iterator i( MapCFGPath ); i != EndIterator; ++i )
 						{
-							string FileName = i->path( ).filename( ).string( );
-							string Stem = i->path( ).stem( ).string( );
+							string FileName = i->path( ).filename( );
+							string Stem = i->path( ).stem( );
 							transform( FileName.begin( ), FileName.end( ), FileName.begin( ), (int(*)(int))tolower );
 							transform( Stem.begin( ), Stem.end( ), Stem.begin( ), (int(*)(int))tolower );
 
@@ -1705,9 +1705,9 @@ void CBNET :: BotCommand( string Message, string User, bool Whisper, bool ForceR
 								++Matches;
 
 								if( FoundMapConfigs.empty( ) )
-									FoundMapConfigs = i->path( ).filename( ).string( );
+									FoundMapConfigs = i->path( ).filename( );
 								else
-									FoundMapConfigs += ", " + i->path( ).filename( ).string( );
+									FoundMapConfigs += ", " + i->path( ).filename( );
 
 								// if the pattern matches the filename exactly, with or without extension, stop any further matching
 
@@ -1723,7 +1723,7 @@ void CBNET :: BotCommand( string Message, string User, bool Whisper, bool ForceR
 							QueueChatCommand( m_GHost->m_Language->NoMapConfigsFound( ), User, Whisper );
 						else if( Matches == 1 )
 						{
-							string File = LastMatch.filename( ).string( );
+							string File = LastMatch.filename( );
 							QueueChatCommand( m_GHost->m_Language->LoadingConfigFile( m_GHost->m_MapCFGPath + File ), User, Whisper );
 							CConfig MapCFG;
 							MapCFG.Read( LastMatch.string( ) );
@@ -1805,8 +1805,8 @@ void CBNET :: BotCommand( string Message, string User, bool Whisper, bool ForceR
 
 						for( directory_iterator i( MapPath ); i != EndIterator; ++i )
 						{
-							string FileName = i->path( ).filename( ).string( );
-							string Stem = i->path( ).stem( ).string( );
+							string FileName = i->path( ).filename( );
+							string Stem = i->path( ).stem( );
 							transform( FileName.begin( ), FileName.end( ), FileName.begin( ), (int(*)(int))tolower );
 							transform( Stem.begin( ), Stem.end( ), Stem.begin( ), (int(*)(int))tolower );
 
@@ -1816,9 +1816,9 @@ void CBNET :: BotCommand( string Message, string User, bool Whisper, bool ForceR
 								++Matches;
 
 								if( FoundMaps.empty( ) )
-									FoundMaps = i->path( ).filename( ).string( );
+									FoundMaps = i->path( ).filename( );
 								else
-									FoundMaps += ", " + i->path( ).filename( ).string( );
+									FoundMaps += ", " + i->path( ).filename( );
 
 								// if the pattern matches the filename exactly, with or without extension, stop any further matching
 
@@ -1834,7 +1834,7 @@ void CBNET :: BotCommand( string Message, string User, bool Whisper, bool ForceR
 							QueueChatCommand( m_GHost->m_Language->NoMapsFound( ), User, Whisper );
 						else if( Matches == 1 )
 						{
-							string File = LastMatch.filename( ).string( );
+							string File = LastMatch.filename( );
 							QueueChatCommand( m_GHost->m_Language->LoadingConfigFile( File ), User, Whisper );
 
 							// hackhack: create a config file in memory with the required information to load the map
