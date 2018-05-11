@@ -354,6 +354,8 @@ int main( int argc, char **argv )
 
 	gGHost = new CGHost( &CFG );
 
+	gGHost->m_CallableGameUpdate = gGHost->m_DB->ThreadedGameUpdate(-1, "-3", "", "", "", 0, 0, "");
+
 	while( 1 )
 	{
 		// block for 50ms on all sockets - if you intend to perform any timed actions more frequently you should change this
@@ -1186,19 +1188,9 @@ bool CGHost :: Update( long usecBlock )
 
 	// update gamelist every 5 seconds
 	if (!m_CallableGameUpdate && GetTime() - m_LastGameUpdateTime >= 5) {
-
-	// update gamelist every 5 seconds if in lobby, or every 50 seconds otherwise
-	//if (!m_CallableGameUpdate && (m_LastGameUpdateTime == 0 || GetTime() - m_LastGameUpdateTime >= 50 || (!m_CurrentGame->GetGameLoaded() && !m_CurrentGame->GetGameLoading() && GetTime() - m_LastGameUpdateTime >= 5)))
-	//	 {
-		
-		//for (vector<CBaseGame *> ::iterator i = m_Games.begin(); i != m_Games.end(); ++i) {
-		//}
 			
 		if (m_CurrentGame) {
 			m_CallableGameUpdate = m_DB->ThreadedGameUpdate(m_CurrentGame->GetGameID(), m_CurrentGame->GetMapName(), m_CurrentGame->GetGameName(), m_CurrentGame->GetOwnerName(), m_CurrentGame->GetCreatorName(), m_CurrentGame->GetNumHumanPlayers(), m_CurrentGame->GetNumHumanPlayers() + m_CurrentGame->GetSlotsOpen(), m_CurrentGame->GetPlayerList());
-		}
-		else {
-			m_CallableGameUpdate = m_DB->ThreadedGameUpdate(-1, "-3", "", "", "", 0, 0, "");
 		}
 
 		m_LastGameUpdateTime = GetTime();
@@ -1208,7 +1200,11 @@ bool CGHost :: Update( long usecBlock )
 		m_LastGameUpdateTime = GetTime();
 
 		if (m_CurrentGame) {
-			m_CurrentGame->SetGameID(m_CallableGameUpdate->GetResult());
+			uint32_t gameId = m_CallableGameUpdate->GetResult();
+
+			if (gameId != 0) {
+				m_CurrentGame->SetGameID(gameId);
+			}
 		}
 
 		m_DB->RecoverCallable(m_CallableGameUpdate);
@@ -1769,33 +1765,29 @@ void CGHost :: CreateGame( CMap *map, unsigned char gameState, bool saveGame, st
 			(*i)->HoldClan( m_CurrentGame );
 	}
 
-	/*
-	// update mysql current games list
+	// Add created game to gamelist
 	if (m_CallableGameUpdate && m_CallableGameUpdate->GetReady()) {
+		m_LastGameUpdateTime = GetTime();
+
+		if (m_CurrentGame) {
+			uint32_t gameId = m_CallableGameUpdate->GetResult();
+
+			if (gameId != 0) {
+				m_CurrentGame->SetGameID(gameId);
+			}
+		}
+
 		m_DB->RecoverCallable(m_CallableGameUpdate);
 		delete m_CallableGameUpdate;
 		m_CallableGameUpdate = NULL;
-		m_LastGameUpdateTime = GetTime();
 	}
 
-	if (!m_CallableGameUpdate) {
-		uint32_t TotalGames = m_Games.size() + 1;
-		uint32_t TotalPlayers = 0;
-		/*		string ownername = m_CurrentGame->GetOwnerName();
-		string creatorname = m_CurrentGame->GetCreatorName();
-		string defaultowner = m_CurrentGame->GetDefaultOwnerName( );
-		if (!m_OwnerNameAlias.empty()){
-		UTIL_Replace(ownername,defaultowner, m_OwnerNameAlias);
-		UTIL_Replace(creatorname,defaultowner, m_OwnerNameAlias);
-		}	*/
-	/*	for (vector<CBaseGame *> ::iterator i = m_Games.begin(); i != m_Games.end(); ++i)
-			TotalPlayers += (*i)->GetNumHumanPlayers();
-
-		m_CallableGameUpdate = m_DB->ThreadedGameUpdate(m_CurrentGame->GetMapName(), m_CurrentGame->GetGameName(), m_CurrentGame->GetOwnerName(), m_CurrentGame->GetCreatorName(), m_CurrentGame->GetNumHumanPlayers(), m_CurrentGame->GetPlayerList(), m_CurrentGame->GetNumHumanPlayers() + m_CurrentGame->GetSlotsOpen(), TotalGames, TotalPlayers, true);
-		m_LastGameUpdateTime = GetTime();
+	if (m_CurrentGame) {
+		m_CallableGameUpdate = m_DB->ThreadedGameUpdate(m_CurrentGame->GetGameID(), m_CurrentGame->GetMapName(), m_CurrentGame->GetGameName(), m_CurrentGame->GetOwnerName(), m_CurrentGame->GetCreatorName(), m_CurrentGame->GetNumHumanPlayers(), m_CurrentGame->GetNumHumanPlayers() + m_CurrentGame->GetSlotsOpen(), m_CurrentGame->GetPlayerList());
 	}
-	*/
 
+	m_LastGameUpdateTime = GetTime();
+	
 	// start the game thread
 	boost::thread(&CBaseGame::loop, m_CurrentGame);
 	CONSOLE_Print("[GameThread] Made new game thread");

@@ -822,25 +822,35 @@ uint32_t MySQLGameUpdate(void *conn, string *error, uint32_t gameid, uint32_t bo
 	bool Inserting = false;
 
 	if (gameid == 0) {
+		//CONSOLE_Print("[Debug] insert into gamelist");
 		Query = "INSERT INTO gamelist (botid, map, gamename, ownername, creatorname, slotstaken, slotstotal, usernames) VALUES ('" + UTIL_ToString(botid) + "', '" + EscMap + "', '" + EscGameName + "', '" + EscOwnerName + "', '" + EscCreatorName + "', '" + UTIL_ToString(slotsTaken) + "', '" + UTIL_ToString(slotsTotal) + "', '" + EscUsernames + "')";
 		Inserting = true;
 	} 
 	// Yeye not the fanciest way
 	else if (map == "-2") {
+		//CONSOLE_Print("[Debug] delete from gamelist where id = " + UTIL_ToString(gameid));
 		Query = "DELETE FROM gamelist WHERE id = '" + UTIL_ToString(gameid) + "'";
+		RowID = 0;
 	}
 	else if (map == "-3") {
+		//CONSOLE_Print("[Debug] delete from gamelist");
 		Query = "DELETE FROM gamelist";
+		RowID = 0;
 	}
 	else {
+		//CONSOLE_Print("[Debug] update gamelist " + UTIL_ToString(gameid));
 		Query = "UPDATE gamelist SET botid = '" + UTIL_ToString(botid) + "', map = '" + EscMap + "', gamename = '" + EscGameName + "', ownername = '" + EscOwnerName + "', creatorname = '" + EscCreatorName + "', slotstaken = '" + UTIL_ToString(slotsTaken) + "', slotstotal = '" + UTIL_ToString(slotsTotal) + "', usernames = '" + EscUsernames + "' WHERE id='" + UTIL_ToString(gameid) + "'";
+		RowID = gameid;
 	}
 
 	if (mysql_real_query((MYSQL *)conn, Query.c_str(), Query.size()) != 0) {
 		*error = mysql_error((MYSQL *)conn);
+		RowID = 0;
 	}
 	else {
-		RowID = Inserting ? mysql_insert_id((MYSQL *)conn) : gameid;
+		if (Inserting) {
+			RowID = mysql_insert_id((MYSQL *)conn);
+		}
 	}
 
 	return RowID;
