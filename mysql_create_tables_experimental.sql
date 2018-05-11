@@ -15,7 +15,7 @@ CREATE TABLE bans (
   ip varchar(15) NOT NULL,
   `date` datetime NOT NULL,
   gamename varchar(31) NOT NULL,
-  admin varchar(15) NOT NULL,
+  `admin` varchar(15) NOT NULL,
   reason varchar(255) NOT NULL,
   PRIMARY KEY  (id),
   KEY server (server),
