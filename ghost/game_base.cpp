@@ -228,6 +228,7 @@ void CBaseGame :: loop( )
 			CONSOLE_Print( "[GameThread] deleting game [" + GetGameName( ) + "]" );
 
 			m_GHost->m_CallableGameUpdate = m_GHost->m_DB->ThreadedGameUpdate(m_GameID, "-2", "", "", "", 0, 0, "");
+			m_GameID = 0;
 
 			m_DoDelete = 3;
 			break;
