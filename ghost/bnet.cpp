@@ -419,9 +419,6 @@ bool CBNET :: Update( void *fd, void *send_fd )
 	{
 		if (i->second->GetReady())
 		{
-			string response = i->second->GetResult();
-
-			QueueChatCommand(response, i->first, !i->first.empty());
 			m_GHost->m_DB->RecoverCallable(i->second);
 			delete i->second;
 			i = m_PairedGameUpdates.erase(i);

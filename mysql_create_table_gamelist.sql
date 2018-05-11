@@ -7,7 +7,5 @@ CREATE TABLE gamelist (
 	creatorname VARCHAR(15) NOT NULL,
 	slotstaken INT NOT NULL,
 	slotstotal INT NOT NULL,
-	usernames VARCHAR(500),
-	totalgames INT NOT NULL,
-	totalplayers INT NOT NULL
+	usernames VARCHAR(1000)
 );
