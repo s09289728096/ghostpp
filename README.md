@@ -39,7 +39,7 @@ Compilation
 GHost++ depends on cmake, libboost, libgmp, zlib, libbz2, and libmysqlclient. These steps should suffice to compile GHost++ on Ubuntu 16.04:
 
 	sudo apt-get install -y cmake git libboost-all-dev build-essential libgmp-dev zlib1g-dev libbz2-dev libmysql++-dev
-	git clone https://github.com/uakfdotb/ghostpp
+	git clone https://github.com/maxemann96/ghostpp
 	cd ghostpp
 
     cd bncsutil
