@@ -8,10 +8,14 @@ GHost++ is a Warcraft III game hosting bot. As the original project on Google Co
 
 GHost++ is no longer actively maintained. Nevertheless, GHost++ remains widely used for hosting Warcraft III games, and there are no major known bugs.
 
-Here are alternatives that are actively being developed as of 31 August 2018:
+Here are alternatives that are actively being developed as of 01 December 2018:
 
 * [Aura](https://github.com/Josko/aura-bot/): simple bot to host games from a server, with greatly modernized core but with many features (MySQL support, autohosting) stripped out
 * [maxemann96/ghostpp](https://github.com/maxemann96/ghostpp): a few additional features like votestart, commands from terminal
+
+1.30.2 Note
+---------
+Since [1.30.2 Patch](https://us.forums.blizzard.com/en/warcraft3/t/1-30-2-patch-notes/1672) this software is no longer needed for the average user.
 
 1.30 Note
 ---------
