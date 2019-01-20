@@ -1316,11 +1316,11 @@ void CGHost :: SetConfigs( CConfig *CFG )
 	m_MapCFGPath = UTIL_AddPathSeperator( CFG->GetString( "bot_mapcfgpath", string( ) ) );
 	m_SaveGamePath = UTIL_AddPathSeperator( CFG->GetString( "bot_savegamepath", string( ) ) );
 	m_MapPath = UTIL_AddPathSeperator( CFG->GetString( "bot_mappath", string( ) ) );
-	m_SaveReplays = CFG->GetInt( "bot_savereplays", 0 ) == 0 ? false : true;
+	m_SaveReplays = CFG->GetInt( "bot_savereplays", 0 ) != 0;
 	m_ReplayPath = UTIL_AddPathSeperator( CFG->GetString( "bot_replaypath", string( ) ) );
 	m_VirtualHostName = CFG->GetString( "bot_virtualhostname", "|cFF4080C0GHost" );
-	m_HideIPAddresses = CFG->GetInt( "bot_hideipaddresses", 0 ) == 0 ? false : true;
-	m_CheckMultipleIPUsage = CFG->GetInt( "bot_checkmultipleipusage", 1 ) == 0 ? false : true;
+	m_HideIPAddresses = CFG->GetInt( "bot_hideipaddresses", 0 ) != 0;
+	m_CheckMultipleIPUsage = CFG->GetInt( "bot_checkmultipleipusage", 1 ) != 0;
 
 	if( m_VirtualHostName.size( ) > 15 )
 	{
@@ -1329,25 +1329,27 @@ void CGHost :: SetConfigs( CConfig *CFG )
 	}
 
 	m_SpoofChecks = CFG->GetInt( "bot_spoofchecks", 2 );
-	m_RequireSpoofChecks = CFG->GetInt( "bot_requirespoofchecks", 0 ) == 0 ? false : true;
-	m_ReserveAdmins = CFG->GetInt( "bot_reserveadmins", 1 ) == 0 ? false : true;
-	m_RefreshMessages = CFG->GetInt( "bot_refreshmessages", 0 ) == 0 ? false : true;
-	m_AutoLock = CFG->GetInt( "bot_autolock", 0 ) == 0 ? false : true;
-	m_AutoSave = CFG->GetInt( "bot_autosave", 0 ) == 0 ? false : true;
+	m_RequireSpoofChecks = CFG->GetInt( "bot_requirespoofchecks", 0 ) != 0;
+	m_ReserveAdmins = CFG->GetInt( "bot_reserveadmins", 1 ) != 0;
+	m_RefreshMessages = CFG->GetInt( "bot_refreshmessages", 0 ) != 0;
+	m_AutoLock = CFG->GetInt( "bot_autolock", 0 ) != 0;
+	m_AutoSave = CFG->GetInt( "bot_autosave", 0 ) != 0;
 	m_AllowDownloads = CFG->GetInt( "bot_allowdownloads", 0 );
-	m_PingDuringDownloads = CFG->GetInt( "bot_pingduringdownloads", 0 ) == 0 ? false : true;
+	m_PingDuringDownloads = CFG->GetInt( "bot_pingduringdownloads", 0 ) != 0;
 	m_MaxDownloaders = CFG->GetInt( "bot_maxdownloaders", 3 );
 	m_MaxDownloadSpeed = CFG->GetInt( "bot_maxdownloadspeed", 100 );
-	m_LCPings = CFG->GetInt( "bot_lcpings", 1 ) == 0 ? false : true;
+	m_LCPings = CFG->GetInt( "bot_lcpings", 1 ) != 0;
 	m_AutoKickPing = CFG->GetInt( "bot_autokickping", 400 );
 	m_StartGameWhenAtLeastXPlayers = CFG->GetInt( "bot_gamenotstartuntilXplayers", 4 );
 	m_VoteStartMinPlayers = CFG->GetInt("bot_votestartplayers", 4);
+	m_VoteStartAllowed = CFG->GetInt( "bot_votestartallowed", 1 ) != 0;
+	m_VoteStartAutohostOnly = CFG->GetInt( "bot_votestartallowedautohostonly", 1 ) != 0;
 	m_BanMethod = CFG->GetInt( "bot_banmethod", 1 );
 	m_IPBlackListFile = CFG->GetString( "bot_ipblacklistfile", "ipblacklist.txt" );
 	m_LobbyTimeLimit = CFG->GetInt( "bot_lobbytimelimit", 10 );
 	m_Latency = CFG->GetInt( "bot_latency", 100 );
 	m_SyncLimit = CFG->GetInt( "bot_synclimit", 50 );
-	m_VoteKickAllowed = CFG->GetInt( "bot_votekickallowed", 1 ) == 0 ? false : true;
+	m_VoteKickAllowed = CFG->GetInt( "bot_votekickallowed", 1 ) != 0;
 	m_VoteKickPercentage = CFG->GetInt( "bot_votekickpercentage", 100 );
 
 	if( m_VoteKickPercentage > 100 )
