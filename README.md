@@ -42,7 +42,7 @@ Compilation
 
 GHost++ on amazonlinux:2023
 
-	apk add alpine-sdk boost-dev bzip2-dev gmp-dev zlib-dev libbz2 bzip2-dev mariadb-connector-c-dev cmake
+	dnf install -y cmake git boost-devel gcc-c++ gmp-devel zlib-devel bzip2-devel
 	git clone -b AWS_LINUX_2023 https://github.com/Fatorin/ghostpp
 	cd ghostpp
 
