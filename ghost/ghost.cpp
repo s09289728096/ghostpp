@@ -39,7 +39,6 @@ namespace MPQ{
 #include "socket.h"
 #include "ghostdb.h"
 #include "ghostdbsqlite.h"
-#include "ghostdbmysql.h"
 #include "bnet.h"
 #include "map.h"
 #include "packed.h"
@@ -380,17 +379,7 @@ CGHost :: CGHost( CConfig *CFG )
 	string DBType = CFG->GetString( "db_type", "sqlite3" );
 	CONSOLE_Print( "[GHOST] opening primary database" );
 
-	if( DBType == "mysql" )
-	{
-#ifdef GHOST_MYSQL
-		m_DB = new CGHostDBMySQL( CFG );
-#else
-		CONSOLE_Print( "[GHOST] warning - this binary was not compiled with MySQL database support, using SQLite database instead" );
-		m_DB = new CGHostDBSQLite( CFG );
-#endif
-	}
-	else
-		m_DB = new CGHostDBSQLite( CFG );
+	m_DB = new CGHostDBSQLite( CFG );
 
 	CONSOLE_Print( "[GHOST] opening secondary (local) database" );
 	m_DBLocal = new CGHostDBSQLite( CFG );
@@ -659,11 +648,7 @@ CGHost :: CGHost( CConfig *CFG )
 	if( m_BNETs.empty( ) && !m_AdminGame )
 		CONSOLE_Print( "[GHOST] warning - no battle.net connections found and no admin game created" );
 
-#ifdef GHOST_MYSQL
-	CONSOLE_Print( "[GHOST] GHost++ Version " + m_Version + " (with MySQL support)" );
-#else
 	CONSOLE_Print( "[GHOST] GHost++ Version " + m_Version + " (without MySQL support)" );
-#endif
 
     // initialize the input thread
 	inputThread = new boost::thread(&CGHost::inputLoop, this);

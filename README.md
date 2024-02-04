@@ -40,50 +40,26 @@ Also, use `War3x.mpq` instead of `War3Patch.mpq`. (Actually, it is recommended t
 Compilation
 -----------
 
-GHost++ depends on cmake, libboost, libgmp, zlib, libbz2, and libmysqlclient. These steps should suffice to compile GHost++ on Ubuntu 16.04:
-
-	sudo apt-get install -y cmake git libboost-all-dev build-essential libgmp-dev zlib1g-dev libbz2-dev libmysql++-dev
-	git clone https://github.com/maxemann96/ghostpp
-	cd ghostpp
-
-    cd bncsutil
-    mkdir build
-    cmake -G "Unix Makefiles" -B./build -H./
-    cd build && make && sudo make install
-
-    cd ../../StormLib/
-    mkdir build
-    cmake -G "Unix Makefiles" -B./build -H./
-    cd build && make && sudo make install
-
-    cd ../../CascLib/
-    mkdir build
-    cmake -G "Unix Makefiles" -B./build -H./
-    cd build && make && sudo make install
-
-	cd ../../ghost/
-	make
-
-GHost++ on Alpine 3.13.1
+GHost++ on amazonlinux:2023
 
 	apk add alpine-sdk boost-dev bzip2-dev gmp-dev zlib-dev libbz2 bzip2-dev mariadb-connector-c-dev cmake
-	git clone https://github.com/maxemann96/ghostpp
+	git clone -b AWS_LINUX_2023 https://github.com/Fatorin/ghostpp
 	cd ghostpp
 
     cd bncsutil
     mkdir build
     cmake -G "Unix Makefiles" -B./build -H./
-    cd build && make && sudo make install
+    cd build && make && make install
 
     cd ../../StormLib/
     mkdir build
     cmake -G "Unix Makefiles" -B./build -H./
-    cd build && make && sudo make install
+    cd build && make && make install
 
     cd ../../CascLib/
     mkdir build
     cmake -G "Unix Makefiles" -B./build -H./
-    cd build && make && sudo make install
+    cd build && make && make install
 
 	cd ../../ghost/
 	make
