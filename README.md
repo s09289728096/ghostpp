@@ -40,7 +40,8 @@ Also, use `War3x.mpq` instead of `War3Patch.mpq`. (Actually, it is recommended t
 Compilation
 -----------
 
-GHost++ depends on cmake, libboost, libgmp, zlib, libbz2, and libmysqlclient. These steps should suffice to compile GHost++ on Ubuntu 16.04:
+GHost++ depends on cmake, libboost, libgmp, zlib, libbz2, and libmysqlclient. We strongly recommend you to manipulate inside a virtual machine or docker.
+These steps should suffice to compile GHost++ on Ubuntu 20.04:
 
 	sudo apt-get install -y cmake git libboost-all-dev build-essential libgmp-dev zlib1g-dev libbz2-dev libmysql++-dev
 	git clone https://github.com/maxemann96/ghostpp
@@ -62,7 +63,7 @@ GHost++ depends on cmake, libboost, libgmp, zlib, libbz2, and libmysqlclient. Th
     cd build && make && sudo make install
 
 	cd ../../ghost/
-	make
+	make -j$(nproc)
 
 GHost++ on Alpine 3.13.1
 
