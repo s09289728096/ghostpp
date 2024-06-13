@@ -91,6 +91,26 @@ GHost++ on Alpine 3.13.1
 
 See MANUAL or [the ghostpp.com wiki](https://www.ghostpp.com/wiki/index.php?title=Main_Page) for more in-depth but possibly outdated guides on other platforms.
 
+Trouble Shooting
+----------------
+1.
+error msg
+
+	./ghost++: error while loading shared libraries: libbncsutil.so.1: cannot open shared object file: No such file or directory
+
+solution
+
+	echo /usr/local/lib >> /etc/ld.so.conf && /sbin/ldconfig -v
+
+2.
+error msg
+
+	Unable to open fifo: fifo_in
+
+solution
+
+	touch fifo_in
+
 Configuration
 -------------
 
